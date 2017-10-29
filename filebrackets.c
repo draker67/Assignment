@@ -10,11 +10,14 @@ char POP(char stack[]);
 void CHECK(char stack[], char c);
 
 int top=-1;
+int flag;
 
 int main()
 {
 	char stack[50];
-	char c;
+	int c;
+	flag=0;
+	int expcount=0;
 	FILE *fptr;
 
 	if ((fptr = fopen("program.txt", "r")) == NULL)
@@ -31,6 +34,8 @@ int main()
 		if(c == '$')
 		{
 			c=getc(fptr);
+			if(c==EOF)
+              			break;
 			while(c != '$')
 			{
 				CHECK(stack,c);
@@ -38,12 +43,24 @@ int main()
 			}
 			if(top!=-1)
 			{
-				printf("Brackets are not balanced,top\n");
-                		exit(0);
+				flag=1;
+				printf("Brackets are not balanced,top not equals 0\n");
 			}
+            		expcount++;
+			if(flag==1)
+            		{
+                		printf("False Expression present at expression number %d",expcount);
+                		exit(0);
+            		}
 			top=-1;
 			printf("\n\n\n");
 		}
+	}
+
+	if(flag==0)
+	{
+		printf("True Expressions");
+		exit(0);
 	}
 	fclose(fptr);
 }
@@ -58,15 +75,15 @@ char POP(char stack[])
 	char item;
 	if(top<0)
 	{
-        	printf("Brackets are not balanced\n");
-		exit(0);
+        	flag=1;
+        	printf("Brackets not balanced,stack underflow\n");
 	}
         else
-              {
-                      item=stack[top];
-                      top=top-1;
-                      return item;
-              }
+        {
+                item=stack[top];
+                top=top-1;
+                return item;
+        }
 }
 void CHECK(char stack[], char c)
 {
@@ -78,40 +95,28 @@ void CHECK(char stack[], char c)
 	if(c==')')
         {
 		tempc=POP(stack);
-	       	if(tempc=='(')
+	       	if(tempc!='(')
                 {
-                        printf("() Brackets are balanced\n");
-                }
-                else
-                {
-                        printf("() Brackets are not balanced");
-                        exit(0);
+                        flag=1;
+			printf("() Brackets are not balanced\n");
                 }
 	}
         if(c=='}')
         {
 		tempc=POP(stack);
-                if(tempc=='{')
+                if(tempc!='{')
                 {
-                        printf("{} Brackets are balanced\n");
-                }
-                else
-                {
-                        printf("{} Brackets are not balanced");
-                        exit(0);
+                        flag=1;
+			printf("{} Brackets are not balanced\n");
                 }
 	}
 	if(c==']')
         {
 		tempc=POP(stack);
-                if(tempc=='[')
+                if(tempc!='[')
                 {
-                        printf("[] Brackets are balanced\n");
-                }
-                else
-                {
-                        printf("[] Brackets are balanced");
-                        exit(0);
+			flag=1;
+                        printf("[] Brackets are not balanced\n");
                 }
 	}
 }
