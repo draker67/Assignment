@@ -21,23 +21,29 @@ int main()
 	{
 		printf("Error in opening file");
 		// Program exits if file pointer returns NULL.
-		exit(0);         
+		exit(0);
 	}
 
 	// reads text until End of File
-	while(1)
+	c = getc(fptr);
+	while(c != EOF)
 	{
-		if (fscanf(fptr,"%c", &c)==EOF)
+		if(c == '$')
 		{
-			printf("Reached End of File\n");
-			break;
+			c=getc(fptr);
+			while(c != '$')
+			{
+				CHECK(stack,c);
+				c = getc(fptr);
+			}
+			if(top!=-1)
+			{
+				printf("Brackets are not balanced,top\n");
+                		exit(0);
+			}
+			top=-1;
+			printf("\n\n\n");
 		}
-		CHECK(stack,c);	
-	}
-	if(top!=-1)
-	{
-		printf("Brackets are not balanced,top\n");
-                exit(0);
 	}
 	fclose(fptr);
 }
