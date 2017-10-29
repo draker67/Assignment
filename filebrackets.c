@@ -50,6 +50,7 @@ int main()
 			if(flag==1)
             		{
                 		printf("False Expression present at expression number %d",expcount);
+				fclose(fptr);
                 		exit(0);
             		}
 			top=-1;
@@ -60,9 +61,9 @@ int main()
 	if(flag==0)
 	{
 		printf("True Expressions");
+		fclose(fptr);
 		exit(0);
 	}
-	fclose(fptr);
 }
 
 void PUSH(char stack[], char item)
