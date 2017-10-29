@@ -12,16 +12,17 @@ void insert(NODE *header,char data[])
 {
     NODE *ptr,*new;
     int flag;
-    ptr=header->link;
+    ptr=header;
     flag=0;
     while(ptr->link!=NULL)
     {
+        ptr=ptr->link;
         if(strcmp(ptr->data,data)==0)
         {
             flag=1;
-            break;
+            goto increment;
         }
-        ptr=ptr->link;
+
     }
     if(flag==0)
     {
@@ -30,12 +31,13 @@ void insert(NODE *header,char data[])
         new->count=1;
         new->link=NULL;
         ptr->link=new;
-        printf("\n%s %d inserted",data,ptr->count);
+        printf("\n%s inserted",data);
     }
     else
     {
-        (ptr->count)++;
-        printf("\nFirst %s inserted",data);
+        increment:
+        ptr->count++;
+        printf("\n%s inserted",data);
     }
 }
 void delete(NODE *header,char data[])
@@ -58,7 +60,7 @@ void delete(NODE *header,char data[])
             }
             ptr1=ptr;
             ptr=ptr->link;
-        }    
+        }
         if(flag==0)
         {
             printf("\n%s is not present in the bag",data);
@@ -91,24 +93,35 @@ void display(NODE *header)
         printf("\nThe bag is empty");
     }
     else
-    {    
+    {   //
         printf("\nThe bag is:\n{");
-        while(ptr->link!=NULL)
+        while(ptr!=NULL)
         {
-            for(i=1;i<=(ptr->count);i++)
-            {
-                printf("%s, ",ptr->data);
-            }
+            if(header->link==ptr)
+                {
+                    printf("%d%s",ptr->count,ptr->data);
+                }
+            else
+                {
+                    printf(",%d%s",ptr->count,ptr->data);
+                }
+
+            ptr=ptr->link;
+
         }
+        //
+
+
         printf("}\n");
     }
-} 
+}
 int main()
 {
     NODE *header;
     int ch;
     char data[10];
     header=(NODE*)malloc(sizeof(NODE));
+    strcpy(header->data,"NULL");
     header->count=0;
     header->link=NULL;
     printf("\nBag/multiset implemented using linked list");
