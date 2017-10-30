@@ -2,9 +2,11 @@
 
 # Algorithm Insertion
 
-<b>Input:</b>  data, the data to be inserted and header, the pointer to the header node
-<b>Output:</b> bag with new data inserted.
-<b>Data Structure:</b> Linked list representation of multiset.
+
+
+<b>Input:</b>  data, the data to be inserted and header, the pointer to the header node<br>
+<b>Output:</b> bag with new data inserted.<br>
+<b>Data Structure:</b> Linked list representation of multiset.<br>
 
     1. ptr=header
     2. while(ptr→link!=NULL) //traverse till the last node
