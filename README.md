@@ -54,7 +54,7 @@
     5. endif
     6. stop
     
-#Algorithm Deletion
+# Algorithm Deletion
 
 <b>Input:</b>  header, the pointer to the header node.
 <b>Output:</b> display the multiset
